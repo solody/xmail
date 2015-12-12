@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Console\Controller\Index' => 'Console\Controller\IndexController',
+            'Console\Controller\Address' => 'Console\Controller\AddressController',
         ),
     ),
     'router' => array(
@@ -11,7 +12,7 @@ return array(
                 'type'    => 'Literal',
                 'options' => array(
                     // Change this to something specific to your module
-                    'route'    => '/index',
+                    'route'    => '/console',
                     'defaults' => array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
