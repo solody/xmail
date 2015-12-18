@@ -1,11 +1,11 @@
 {
   "name" : "solody/xmail",
-  "description" : "Skeleton Application for ZF2",
+  "description" : "Send email by bat.",
   "require" : {
     "php" : ">=5.5",
     "zendframework/zendframework" : "=2.5.2"
   },
   "license" : "BSD-3-Clause",
-  "keywords" : [ "framework", "zf2" ],
-  "homepage" : "http://framework.zend.com/"
+  "keywords" : [ "xmail"],
+  "homepage" : "https://github.com/solody/xmail"
 }
