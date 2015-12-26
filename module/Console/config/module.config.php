@@ -3,7 +3,9 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Console\Controller\Index' => 'Console\Controller\IndexController',
-            'Console\Controller\Address' => 'Console\Controller\AddressController',
+        ),
+        'factories' => array(
+            'Console\Controller\Address' => 'Console\Factory\AddressControllerFactory',
         ),
     ),
     'router' => array(
@@ -47,5 +49,10 @@ return array(
         'template_path_stack' => array(
             'Console' => __DIR__ . '/../view',
         ),
+    ),
+    'service_manager' => array(
+        'factories' => array(
+            'Console\Service\AddressServiceInterface' => 'Console\Factory\AddressServiceFactory'
+        )
     ),
 );

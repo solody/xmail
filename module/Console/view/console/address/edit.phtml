@@ -1,24 +1,109 @@
+<h4>QQ邮件地址收集</h4>
+<hr>
 <?php
 $form = $this->form;
 $form->prepare();
 ?>
-<?php echo $this->form()->openTag($form->setAttribute('class','form-horizontal'));?>
+<?php echo $this->form()->openTag($form->setAttributes(array(
+    'class'=>'form-inline',
+    'id'=>'form_address',
+)));?>
 
-    <?php echo $this->formText($form->get('id')); ?>
+    <?php echo $this->formHidden($form->get('id')); ?>
 
     <div class="form-group">
-        <div class="col-sm-9 col-lg-10">
-            <?php echo $this->formText($form->get('qq')->setAttribute('placeholder','QQ号')); ?>
-            @<?php echo $this->formText($form->get('domain')->setAttribute('value','qq.com')); ?>
-        </div>
+        <?php echo $this->formText($form->get('qq')->setAttributes(array(
+            'class'=>'form-control',
+            'id' => 'input_username',
+            'placeholder'=>'请输入QQ号',
+        ))); ?>
     </div>
     
     <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-9 col-lg-offset-2 col-lg-10">
+        <label for="input_domain">@</label>
+        <?php echo $this->formText($form->get('domain')->setAttributes(array(
+            'value'=>'qq.com',
+            'id'=>'input_domain',
+            'class'=>'form-control',
+        ))); ?>
+    </div>
+    
+    <div class="form-group">
         <?php echo $this->formSubmit($form->get('submit')->setAttributes(array(
+            'class' => 'btn btn-default',
+            'disabled' => 'disabled',
+            'id' => 'btn_submit',
             'value' => '添加'
         ))); ?>
-        </div>
     </div>
 
 <?php echo $this->form()->closeTag(); ?>
+<script>
+$(document).ready(function($){
+
+	$('#input_username').click(function(){
+
+		$(this).select();
+
+	});
+
+	$('#form_address').submit(function(){
+
+		var email = $(this).val()+'@'+$('#input_domain').val();
+		
+		$('#btn_submit').attr('disabled','disabled');
+		$('#btn_submit').val('正在保存。。。');
+
+		$.ajax({
+			type: "POST",
+	        url: "<?=$this->url('console/default',array('controller'=>'address','action'=>'saveemail'))?>",
+	        data:{'email':email},
+	        cache: false,
+	        success: function(data){
+		        
+	        	console.log(data);
+	        	
+	        	$('#btn_submit').attr('disabled',false);
+	    		$('#btn_submit').val('添加');
+	        }
+	    });
+		
+		return false;
+		
+	});
+	
+	$('#input_username').keyup(function(){
+
+		var email = $(this).val()+'@'+$('#input_domain').val();
+
+		$('#btn_submit').val('正在检查。。。');
+		
+		$.ajax({
+			type: "POST",
+	        url: "<?=$this->url('console/default',array('controller'=>'address','action'=>'checkemail'))?>",
+	        data:{'email':email},
+	        cache: false,
+	        success: function(data){
+		        
+	        	console.log(data);
+	        	
+	        	if (data.status == '1') {
+		        	
+		        	$('#btn_submit').attr('disabled',false);
+		        	$('#btn_submit').val('添加');
+		        	$('#btn_submit').css('color','');
+		        	
+	        	} else {
+
+	        		$('#btn_submit').attr('disabled','disabled');
+		        	$('#btn_submit').val('邮件地址已存在数据中！');
+		        	$('#btn_submit').css('color','red');
+	        		
+	        	}
+	        }
+	    });
+		
+	});
+	
+});
+</script>

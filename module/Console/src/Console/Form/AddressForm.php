@@ -2,6 +2,7 @@
 namespace Console\Form;
 
 use Zend\Form\Form;
+use Zend\Form\Element;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Input;
 
@@ -12,10 +13,9 @@ class AddressForm extends Form
     {
         parent::__construct('console_address');
 
-        $this->add(array(
-            'name' => 'id',
-            'type' => 'Hidden',
-        ));
+        $element_id = new Element\Hidden('id');
+        $element_id->setValue('');
+        $this->add($element_id);
         
         $this->add(array(
             'name' => 'qq',

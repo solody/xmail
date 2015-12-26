@@ -4,6 +4,9 @@ namespace Console\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Console\Form\AddressForm;
+use Zend\View\Model\JsonModel;
+use Console\Service\AddressServiceInterface;
+use Console\Model\Address;
 
 /**
  * AddressController
@@ -15,7 +18,13 @@ use Console\Form\AddressForm;
  */
 class AddressController extends AbstractActionController
 {
-
+    protected $addressService;
+    
+    public function __construct(AddressServiceInterface $addressService)
+    {
+        $this->addressService = $addressService;
+    }
+    
     /**
      * The default action - show the home page
      */
@@ -25,7 +34,8 @@ class AddressController extends AbstractActionController
         return new ViewModel();
     }
     
-    public function editAction() {
+    public function editAction() 
+    {
         
         $form = new AddressForm();
         $vars = array('form'=>$form);
@@ -34,5 +44,58 @@ class AddressController extends AbstractActionController
         //$view_page = $this->setChildViews($view_page);
         
         return $view_page;
+    }
+    
+    /**
+     * AJAX方式检查邮件地址是否可用，可用则说明邮件地址还没有在系统中，则否已存在系统中。
+     */
+    public function checkemailAction() 
+    {
+        $this->emailSubmitPrecheck();
+        
+        $post_data = $this->getRequest()->getPost();
+        $email = trim($post_data['email']);
+            
+        $status = $this->addressService->checkAddress($email);
+        
+        return new JsonModel(array(
+            'status'=>intval($status),
+            'email'=>$email,
+        ));
+
+        
+        
+    }
+    
+    public function saveemailAction()
+    {
+        $this->emailSubmitPrecheck();
+        
+        $post_data = $this->getRequest()->getPost();
+        
+        $id = $this->addressService->saveAddress(new Address(trim($post_data['email'])));
+        
+        return new JsonModel(array(
+            'id'=>intval($id),
+            'email'=>$email,
+        ));
+    }
+    
+    protected function emailSubmitPrecheck()
+    {
+        $request = $this->getRequest();
+        
+        if ($request->isPost()) {
+        
+            $post_data = $request->getPost();
+        
+            $email = trim($post_data['email']);
+        
+            if (empty($email))  throw new \Exception('Empty value!');
+            else return true;
+        
+        } else {
+            throw new \Exception('Error method!');
+        }
     }
 }

@@ -1,11 +1,12 @@
 {
   "name" : "solody/xmail",
   "description" : "Send email by bat.",
+  "version" : "0.0.1",
   "require" : {
     "php" : ">=5.5",
     "zendframework/zendframework" : "=2.5.2"
   },
   "license" : "BSD-3-Clause",
-  "keywords" : [ "xmail"],
+  "keywords" : [ "xmail" ],
   "homepage" : "https://github.com/solody/xmail"
 }
