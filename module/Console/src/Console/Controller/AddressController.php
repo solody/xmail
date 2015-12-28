@@ -107,7 +107,19 @@ class AddressController extends AbstractActionController
             $email = trim($post_data['email']);
         
             if (empty($email))  throw new \Exception('Empty value!');
-            else return true;
+            
+            $validator = new \Zend\Validator\EmailAddress();
+            $msg = '';
+            if (!$validator->isValid($email)) {
+                // email is invalid; print the reasons
+                foreach ($validator->getMessages() as $messageId => $message) {
+                    $msg .= "Validation failure '$messageId': $message\n";
+                }
+                
+                throw new \Exception($msg);
+            } else {
+                return true;
+            }
         
         } else {
             throw new \Exception('Error method!');

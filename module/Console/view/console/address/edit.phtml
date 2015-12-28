@@ -49,7 +49,7 @@ $(document).ready(function($){
 
 	$('#form_address').submit(function(){
 
-		var email = $('#input_username').val()+'@'+$('#input_domain').val();
+		var email = $('#input_username').val().trim()+'@'+$('#input_domain').val();
 		
 		$('#btn_submit').attr('disabled','disabled');
 		$('#btn_submit').val('正在保存。。。');
@@ -86,7 +86,9 @@ $(document).ready(function($){
 	
 	$('#input_username').keyup(function(){
 
-		var email = $(this).val()+'@'+$('#input_domain').val();
+		if ($(this).val().trim() == '') return false;
+		
+		var email = $(this).val().trim()+'@'+$('#input_domain').val();
 
 		$('#btn_submit').val('正在检查。。。');
 		
