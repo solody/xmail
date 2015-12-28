@@ -20,19 +20,33 @@ use Console\Service\Exception\AddressAlreadyExsistException;
 class AddressController extends AbstractActionController
 {
     protected $addressService;
+    protected $dbAdapter;
     
-    public function __construct(AddressServiceInterface $addressService)
+    public function __construct(AddressServiceInterface $addressService, \Zend\Db\Adapter\Adapter $dbAdapter)
     {
         $this->addressService = $addressService;
+        $this->dbAdapter = $dbAdapter;
     }
     
     /**
-     * The default action - show the home page
+     * 显示所有已收集的Email地址
      */
     public function indexAction()
     {
-        // TODO Auto-generated AddressController::indexAction() default action
-        return new ViewModel();
+        $hydrator = new \Zend\Stdlib\Hydrator\ObjectProperty();
+        $objectPrototype = new \Console\Model\Address();
+        $resultSet = new \Zend\Db\ResultSet\HydratingResultSet($hydrator, $objectPrototype);
+        
+        $query = new \Zend\Db\Sql\Select();
+        $query->from('address');
+        
+        $adapter = new \Zend\Paginator\Adapter\DbSelect($query, $this->dbAdapter, $resultSet);
+        $paginator = new \Zend\Paginator\Paginator($adapter);
+        
+        
+        return new ViewModel(array(
+            'paginator'=>$paginator,
+        ));
     }
     
     public function editAction() 
@@ -68,6 +82,10 @@ class AddressController extends AbstractActionController
         
     }
     
+    /**
+     * AJAX方式保存一个邮件地址
+     * @return \Zend\View\Model\JsonModel
+     */
     public function saveemailAction()
     {
         $this->emailSubmitPrecheck();

@@ -11,9 +11,8 @@ class AddressControllerFactory implements FactoryInterface
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         $addressService     = $realServiceLocator->get('Console\Service\AddressServiceInterface');
+        $dbAdapter          = $realServiceLocator->get('Zend\Db\Adapter\Adapter');
         
-        return new AddressController($addressService);
+        return new AddressController($addressService, $dbAdapter);
     }
 }
-
-?>
