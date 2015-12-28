@@ -49,7 +49,7 @@ $(document).ready(function($){
 
 	$('#form_address').submit(function(){
 
-		var email = $(this).val()+'@'+$('#input_domain').val();
+		var email = $('#input_username').val()+'@'+$('#input_domain').val();
 		
 		$('#btn_submit').attr('disabled','disabled');
 		$('#btn_submit').val('正在保存。。。');
@@ -62,9 +62,21 @@ $(document).ready(function($){
 	        success: function(data){
 		        
 	        	console.log(data);
+
+	        	if (data.status == '1') {
+
+	        		$('#btn_submit').attr('disabled',false);
+		    		$('#btn_submit').val('添加');
+		        	$('#btn_submit').css('color','');
+		    		
+	        	} else {
+
+	        		$('#btn_submit').attr('disabled','disabled');
+		    		$('#btn_submit').val(data.msg);
+		    		$('#btn_submit').css('color','red');
+		    		
+	        	}
 	        	
-	        	$('#btn_submit').attr('disabled',false);
-	    		$('#btn_submit').val('添加');
 	        }
 	    });
 		

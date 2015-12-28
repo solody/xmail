@@ -5,6 +5,7 @@ use Zend\Db\Adapter\Adapter;
 use Console\Model\Address;
 use Zend\Stdlib\Hydrator\ObjectProperty as ObjectPropertyHydrator;
 use Zend\Db\TableGateway\TableGateway;
+use Console\Service\Exception\AddressAlreadyExsistException;
 
 class AddressService implements AddressServiceInterface
 {
@@ -24,12 +25,13 @@ class AddressService implements AddressServiceInterface
             
             $hydrator = new ObjectPropertyHydrator;
             $data = $hydrator->extract($address);
-            $id = $addressTable->insert($data);
+            $addressTable->insert($data);
+            $id = $addressTable->lastInsertValue;
             
             return $id;
             
         } else {
-            throw new \Exception('Address already exsist!');
+            throw new AddressAlreadyExsistException('Address already exsist!');
         }
     }
     

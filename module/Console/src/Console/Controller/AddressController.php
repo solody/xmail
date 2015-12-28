@@ -7,6 +7,7 @@ use Console\Form\AddressForm;
 use Zend\View\Model\JsonModel;
 use Console\Service\AddressServiceInterface;
 use Console\Model\Address;
+use Console\Service\Exception\AddressAlreadyExsistException;
 
 /**
  * AddressController
@@ -73,12 +74,26 @@ class AddressController extends AbstractActionController
         
         $post_data = $this->getRequest()->getPost();
         
-        $id = $this->addressService->saveAddress(new Address(trim($post_data['email'])));
+        $email = trim($post_data['email']);
         
-        return new JsonModel(array(
-            'id'=>intval($id),
-            'email'=>$email,
-        ));
+        $id = null;
+        $status = true;
+        $msg = '成功';
+        try {
+            $id = $this->addressService->saveAddress(new Address($email));
+        } catch (AddressAlreadyExsistException $e) {
+            $status = false;
+            $msg = $e->getMessage();
+        } finally {
+            return new JsonModel(array(
+                'id'=>intval($id),
+                'email'=>$email,
+                'status'=>intval($status),
+                'msg'=>$msg,
+            ));
+        }
+        
+        
     }
     
     protected function emailSubmitPrecheck()
