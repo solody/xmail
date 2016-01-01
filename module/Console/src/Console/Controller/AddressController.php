@@ -43,6 +43,8 @@ class AddressController extends AbstractActionController
         $adapter = new \Zend\Paginator\Adapter\DbSelect($query, $this->dbAdapter, $resultSet);
         $paginator = new \Zend\Paginator\Paginator($adapter);
         
+        $paginator->setCurrentPageNumber( $this->params()->fromRoute('page') );
+        
         
         return new ViewModel(array(
             'paginator'=>$paginator,

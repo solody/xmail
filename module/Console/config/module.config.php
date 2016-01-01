@@ -32,12 +32,14 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action]]',
+                            'route'    => '/[:controller[/:action]][/:page]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'page' => '[1-9][0-9]*',
                             ),
                             'defaults' => array(
+                                'page'=>1,
                             ),
                         ),
                     ),

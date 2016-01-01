@@ -1,0 +1,39 @@
+<?php if ($this->pageCount):
+
+$route_params = $this->routeParams;
+
+?>
+<nav>
+<ul class="pagination pagination-sm">
+
+    <!-- Previous page link -->
+    <?php if (isset($this->previous)):
+      $route_params['page']=$this->previous;?>
+      <li><a href="<?php echo $this->url($this->route, $route_params); ?>" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    <?php else: ?>
+      <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    <?php endif; ?>
+
+    
+    <!-- Numbered page links -->
+    <?php foreach ($this->pagesInRange as $page):
+        $route_params['page']=$page;?>
+      <?php if ($page != $this->current): ?>
+        <li><a href="<?php echo $this->url($this->route, $route_params); ?>"><?php echo $page; ?> <span class="sr-only">(current)</span></a></li>
+      <?php else: ?>
+        <li class="active"><a href="<?php echo $this->url($this->route, $route_params); ?>"><?php echo $page; ?></a></li>
+      <?php endif; ?>
+    <?php endforeach; ?>
+    
+    
+    <!-- Next page link -->
+    <?php if (isset($this->next)): 
+        $route_params['page']=$this->next;?>
+      <li><a href="<?php echo $this->url($this->route, $route_params); ?>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    <?php else: ?>
+      <li class="disabled"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    <?php endif; ?>
+
+</ul>
+</nav>
+<?php endif; ?>

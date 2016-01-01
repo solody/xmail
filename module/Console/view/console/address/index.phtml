@@ -1,2 +1,15 @@
-<?php
-print(count($this->paginator));
+<a href="<?php echo $this->url('console/default',array('controller'=>'address','action'=>'edit')); ?>">添加邮件地址</a>
+
+<?php if (count($this->paginator)): ?>
+<ul>
+<?php foreach ($this->paginator as $item): ?>
+  <li><?=$item->address; ?></li>
+<?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
+<?php echo $this->paginationControl($this->paginator,
+                                    'Sliding',
+                                    'widget/pagination-control', array('route' => 'console/default', 'routeParams' => array(
+                                        'controller' => 'address'
+))); ?>
