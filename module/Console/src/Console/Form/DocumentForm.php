@@ -33,5 +33,3 @@ class DocumentForm extends Form
     
     }
 }
-
-?>

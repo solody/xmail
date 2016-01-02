@@ -16,5 +16,3 @@ class DocumentControllerFactory implements FactoryInterface
         return new DocumentController($documentService, $dbAdapter);
     }
 }
-
-?>

@@ -15,5 +15,3 @@ class AddressServiceFactory implements FactoryInterface
         return new AddressService($adapter);
     }
 }
-
-?>

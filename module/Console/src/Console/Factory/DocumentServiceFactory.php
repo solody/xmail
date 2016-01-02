@@ -15,5 +15,3 @@ class DocumentServiceFactory implements FactoryInterface
         return new DocumentService($adapter);
     }
 }
-
-?>

@@ -13,5 +13,3 @@ class Document
         $this->content    = $content;
     }
 }
-
-?>

@@ -74,5 +74,3 @@ class DocumentService
         return $paginator;
     }
 }
-
-?>
