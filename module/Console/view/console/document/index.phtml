@@ -1,0 +1,15 @@
+<a href="<?php echo $this->url('console/document_edit'); ?>">添加文案</a>
+
+<?php if (count($this->paginator)): ?>
+<ul>
+<?php foreach ($this->paginator as $item): ?>
+  <li><a href="<?php echo $this->url('console/document_edit',array('document_id'=>$item->id)); ?>"><?=$item->title; ?></a></li>
+<?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
+<?php echo $this->paginationControl($this->paginator,
+                                    'Sliding',
+                                    'widget/pagination-control', array('route' => 'console/default', 'routeParams' => array(
+                                        'controller' => 'document'
+))); ?>

@@ -3,9 +3,11 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Console\Controller\Index' => 'Console\Controller\IndexController',
+            
         ),
         'factories' => array(
             'Console\Controller\Address' => 'Console\Factory\AddressControllerFactory',
+            'Console\Controller\Document' => 'Console\Factory\DocumentControllerFactory',
         ),
     ),
     'router' => array(
@@ -43,6 +45,19 @@ return array(
                             ),
                         ),
                     ),
+                    'document_edit' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/document/edit[/:document_id]',
+                            'constraints' => array(
+                                'document_id' => '[1-9][0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Document',
+                                'action'     => 'edit',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -54,7 +69,8 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            'Console\Service\AddressServiceInterface' => 'Console\Factory\AddressServiceFactory'
+            'Console\Service\AddressServiceInterface' => 'Console\Factory\AddressServiceFactory',
+            'Console\Service\DocumentService' => 'Console\Factory\DocumentServiceFactory'
         )
     ),
 );
