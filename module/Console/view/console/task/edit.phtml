@@ -1,0 +1,53 @@
+<h4>
+    <span>编辑一个任务</span>
+    <a href="<?php echo $this->url('console/default',array('controller'=>'task')); ?>">查看所有已保存的任务</a>
+</h4>
+<hr>
+
+
+
+
+<?php
+$form = $this->form;
+$form->prepare();
+
+if (!empty($this->saved_int)) {
+    
+    $document_id = $this->saved_int;
+    
+    if (!empty($form->get('id')->getValue())) {
+        $document_id = $form->get('id')->getValue();
+    }
+    
+    echo '<p>已成功保存<!--，返回数字是：'.$this->saved_int.'--></p><script>location.href="'.$this->url('console/task_edit',array('task_id'=>$document_id)).'";</script>';
+    $form->get('submit')->setAttribute('disabled','disabled');
+}
+?>
+
+
+
+<?php echo $this->form()->openTag($form->setAttributes(array(
+    'class'=>'',
+    'id'=>'form_task',
+)));?>
+
+<?php echo $this->formHidden($form->get('id')); ?>
+
+<div class="form-group">
+    <?php echo $this->formText($form->get('title')->setAttributes(array(
+        'class'=>'form-control',
+        'id' => 'title',
+        'placeholder'=>'为新任务起一个名字吧！',
+    ))); ?>
+</div>
+
+<div class="form-group">
+    <?php echo $this->formSubmit($form->get('submit')->setAttributes(array(
+        'class' => 'btn btn-default',
+        'id' => 'btn_submit',
+        'value' => '保存'
+    ))); ?>
+</div>
+
+<?php echo $this->form()->closeTag(); ?>
+

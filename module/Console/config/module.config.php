@@ -3,11 +3,11 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Console\Controller\Index' => 'Console\Controller\IndexController',
-            
         ),
         'factories' => array(
             'Console\Controller\Address' => 'Console\Factory\AddressControllerFactory',
             'Console\Controller\Document' => 'Console\Factory\DocumentControllerFactory',
+            'Console\Controller\Task' => 'Console\Factory\TaskControllerFactory',
         ),
     ),
     'router' => array(
@@ -58,6 +58,19 @@ return array(
                             ),
                         ),
                     ),
+                    'task_edit' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/task/edit[/:task_id]',
+                            'constraints' => array(
+                                'task_id' => '[1-9][0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Task',
+                                'action'     => 'edit',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -70,7 +83,8 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'Console\Service\AddressServiceInterface' => 'Console\Factory\AddressServiceFactory',
-            'Console\Service\DocumentService' => 'Console\Factory\DocumentServiceFactory'
+            'Console\Service\DocumentService' => 'Console\Factory\DocumentServiceFactory',
+            'Console\Service\TaskService' => 'Console\Factory\TaskServiceFactory',
         )
     ),
 );
