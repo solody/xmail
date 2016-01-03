@@ -71,6 +71,34 @@ return array(
                             ),
                         ),
                     ),
+                    'queue' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/task/queue/:task_id[/:page]',
+                            'constraints' => array(
+                                'task_id' => '[1-9][0-9]*',
+                                'page' => '[1-9][0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Task',
+                                'action'     => 'queue',
+                                'page'=>1,
+                            ),
+                        ),
+                    ),
+                    'queue_edit' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/task/queue/edit/:task_id',
+                            'constraints' => array(
+                                'task_id' => '[1-9][0-9]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Task',
+                                'action'     => 'queueedit',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),

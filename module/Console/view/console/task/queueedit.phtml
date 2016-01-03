@@ -1,0 +1,55 @@
+<h4>
+    <span>为任务添加队列项</span>
+    <a href="<?php echo $this->url('console/queue',array('task_id'=>$this->task_id)); ?>">查看已有的队列项</a>
+</h4>
+<hr>
+
+<?php
+$form = $this->form;
+$form->prepare();
+
+if (!empty($this->saved)) {
+
+    $task_id = $this->task_id;
+
+    echo '<p>已成功保存</p><script>//location.href="'.$this->url('console/queue',array('task_id'=>$task_id)).'";</script>';
+    $form->get('submit')->setAttribute('disabled','disabled');
+}
+?>
+
+<?php echo $this->form()->openTag($form->setAttributes(array(
+    'class'=>'',
+)));?>
+
+<?php echo $this->formHidden($form->get('task_id')); ?>
+<div class="form-group">
+<?php echo $this->formLabel($form->get('task_title')->setLabel('任务')); ?>
+<?php echo $this->formText($form->get('task_title')->setAttributes(array(
+    'class'=>'form-control',
+    'disabled'=>'disabled',
+))); ?>
+</div>
+
+<div class="form-group">
+<?php echo $this->formLabel($form->get('document')->setLabel('文档')); ?>
+<?php echo $this->formSelect($form->get('document')->setAttributes(array(
+    'class'=>'form-control',
+))); ?>
+</div>
+
+<div class="form-group">
+<?php echo $this->formLabel($form->get('address_type')->setLabel('发送给 ')); ?>
+<?php echo $this->formSelect($form->get('address_type')->setAttributes(array(
+    'class'=>'form-control',
+))); ?>
+</div>
+
+<div class="form-group">
+    <?php echo $this->formSubmit($form->get('submit')->setAttributes(array(
+        'class' => 'btn btn-default',
+        'id' => 'btn_submit',
+        'value' => '添加'
+    ))); ?>
+</div>
+
+<?php echo $this->form()->closeTag(); ?>

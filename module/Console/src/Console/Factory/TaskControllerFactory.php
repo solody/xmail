@@ -11,9 +11,10 @@ class TaskControllerFactory implements FactoryInterface
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         $taskService     = $realServiceLocator->get('Console\Service\TaskService');
+        $documentService = $realServiceLocator->get('Console\Service\DocumentService');
         $dbAdapter          = $realServiceLocator->get('Zend\Db\Adapter\Adapter');
     
-        return new TaskController($taskService, $dbAdapter);
+        return new TaskController($taskService, $documentService, $dbAdapter);
     }
 }
 

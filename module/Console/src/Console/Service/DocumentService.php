@@ -57,6 +57,21 @@ class DocumentService
         }
     }
     
+    public function getDocumentTitles(){
+        
+        $rs = $this->adapter->query('SELECT `id`,`title` FROM `document`',array());
+        
+        $data = array();
+        
+        if ($rs->count()) {
+            foreach ($rs as $document) {
+                $data[$document['id']] = $document['title'];
+            }
+        }
+        
+        return $data;
+    }
+    
     public function getDocumentPaginator($page_num)
     {
         $hydrator = new ObjectPropertyHydrator();
