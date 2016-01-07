@@ -100,7 +100,7 @@ class TaskService
         
         $sql = "SELECT `id` FROM `address`";
         $sql_pamas = array();
-        if (QueueItemsForm::ADDRESS_TYPE_NEW === $address_type) {
+        if (QueueItemsForm::ADDRESS_TYPE_NEW === intval($address_type)) {
             $sql .= "WHERE `id` NOT IN (SELECT `address_id` FROM `queue` WHERE `document_id`=?)";
             array_push($sql_pamas, $document_id);
         }
