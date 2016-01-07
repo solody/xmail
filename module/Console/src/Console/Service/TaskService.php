@@ -89,6 +89,7 @@ class TaskService
         $paginator = new \Zend\Paginator\Paginator($adapter);
         
         $paginator->setCurrentPageNumber($page_num);
+        $paginator->setDefaultItemCountPerPage(100);
         
         return $paginator;
     }
